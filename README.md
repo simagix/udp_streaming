@@ -3,6 +3,7 @@ Simple UDP Unicast application using Python and Flask.
 
 ### Installation
 ```
+sudo apt-get install vlc
 sudo pip install Flask
 ```
 
