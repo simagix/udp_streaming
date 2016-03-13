@@ -3,14 +3,15 @@
 import json
 import os
 import subprocess
+import sys
 from flask import Flask, send_from_directory, request
 
 app = Flask(__name__)
 root = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
+libraryRepo = 'library.repo'
 
 library = [
-    {'title': 'Skyfall', 'media': 'file:////home/pi/Videos/skyfall.mp4'},
-    {'title': 'Just The Way You Are', 'media': 'file:////home/pi/Videos/just_the_way_you_are.mp4'}
+    {'title': 'Demo', 'media': 'file:////home/pi/Videos/demo.mp4'}
 ]
 
 @app.route("/")
@@ -43,6 +44,11 @@ def udpCast(ip, port, index):
     return json.dumps({'ok': 1, 'ip': ip, 'port': port}), 201, {'Content-Type': 'application/json'}
 
 if __name__ == '__main__':
+    if len(sys.argv) > 1:
+        libraryRepo = sys.argv[1]
+    print libraryRepo
+    with open(libraryRepo, 'r') as repo:
+        library = json.loads(repo.read())
     app.debug = True
     app.run(host= '0.0.0.0')
 
