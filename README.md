@@ -15,5 +15,9 @@ sudo pip install Flask
 ### Test with VLC
 On VLC player, open Media->Open Network Stream..., then Network tab.  Enter udp://@:1234.  On terminal running the server.py
 ```
-curl -X POST http://localhost:5000/streaming/udp/<client_ip>/1234
+curl -X POST http://localhost:5000/streaming/udp/<client_ip>/1234/0
+```
+Or from a client
+```
+curl -X POST http://localhost:5000/streaming/udp/remote/1234/0
 ```
