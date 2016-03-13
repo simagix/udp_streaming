@@ -14,6 +14,8 @@ library = [
     {'title': 'Demo', 'media': 'file:////home/pi/Videos/demo.mp4'}
 ]
 
+processes = {}
+
 @app.route("/")
 def redirec2index():
     return send_from_directory(root, 'index.html')
@@ -39,8 +41,15 @@ def udpCast(ip, port, index):
     params += str(port)
     params += '}'
     cmd = ['cvlc', '-v', file, '--sout', params]
-    print cmd
-    subprocess.Popen(cmd)
+    process = subprocess.Popen(cmd)
+    tag = '{:02X}{:02X}{:02X}{:02X}'.format(*map(int, ip.split('.')))
+    tag += '_'
+    tag += str(port)
+    print tag
+    if processes.get(tag, 'none') != 'none':
+        proc = processes[tag]
+        proc.kill()
+    processes[tag] = process
     return json.dumps({'ok': 1, 'ip': ip, 'port': port}), 201, {'Content-Type': 'application/json'}
 
 if __name__ == '__main__':
