@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+    <title>Stream</title>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.1.0.js"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="/static/controller.js"></script>
+</head>
+
+<body style="background-color: #fff; margin: 2px;" ng-app="stream" ng-controller="StreamController">
+    <div align='left' uib-dropdown is-open="kpiRuleStatus.isopen">
+        <button id="single-button" type="button" class="btn" uib-dropdown-toggle
+            tooltip-enable="!inputModel">{{title}} <span class="caret"></span>
+        </button>   
+        <ul uib-dropdown-menu role="menu" aria-labelledby="single-button">
+            <li ng-repeat="doc in titles"><a href ng-click='titleSelected(doc);'>{{doc.title}}</a></li>
+       </ul>
+    </div>
+    <hr/>
+    <div id='vlc' align='center'>
+        <embed type="application/x-vlc-plugin" pluginspage="http://www.videolan.org" version="VideoLAN.VLCPlugin.2.2"
+            width="640" height="360" id="video"'>
+        </embed>
+    </div>
+</body>
+</html>
+
