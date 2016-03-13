@@ -24,10 +24,11 @@ app.controller('StreamController', function($scope, $http, $log) {
         var url = '/streaming/udp/remote/1234/' + doc.index;
         $scope.title = doc.title;
         $http.post(url).success(function(data) {
-            $log.info('playing ...');
+            $log.info('playing ... ' + JSON.stringify(data));
+            var uri = 'udp://@:1234';
             var video = document.getElementById('video');
             video.playlist.clear();
-            video.playlist.add('udp://@:1234');
+            video.playlist.add(uri);
             video.playlist.play(); 
         });
     }

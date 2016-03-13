@@ -37,7 +37,9 @@ def udpCast(ip, port, index):
     params += ':'
     params += str(port)
     params += '}'
-    subprocess.Popen(['cvlc', '-v', file, '--sout', params])
+    cmd = ['cvlc', '-v', file, '--sout', params]
+    print cmd
+    subprocess.Popen(cmd)
     return json.dumps({'ok': 1, 'ip': ip, 'port': port}), 201, {'Content-Type': 'application/json'}
 
 if __name__ == '__main__':
