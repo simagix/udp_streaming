@@ -52,12 +52,23 @@ def udpCast(ip, port, index):
     processes[tag] = process
     return json.dumps({'ok': 1, 'ip': ip, 'port': port}), 201, {'Content-Type': 'application/json'}
 
+@app.route('/ss/SetupSession', methods=['POST'])
+def setupSession():
+    return "";
+
+@app.route('/ss/TeardownSession', methods=['POST'])
+def teardownSession():
+    return "";
+
 if __name__ == '__main__':
     if len(sys.argv) > 1:
         libraryRepo = sys.argv[1]
     print libraryRepo
-    with open(libraryRepo, 'r') as repo:
-        library = json.loads(repo.read())
+    try:
+        with open(libraryRepo, 'r') as repo:
+            library = json.loads(repo.read())
+    except:
+        print 'error opening %s' % (libraryRepo)
     app.debug = True
-    app.run(host= '0.0.0.0')
+    app.run(host= '0.0.0.0', port=5050)
 
