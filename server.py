@@ -5,6 +5,7 @@ import os
 import subprocess
 import sys
 from flask import Flask, send_from_directory, request
+import xml.etree.ElementTree as ET
 
 app = Flask(__name__)
 root = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
@@ -54,7 +55,13 @@ def udpCast(ip, port, index):
 
 @app.route('/ss/SetupSession', methods=['POST'])
 def setupSession():
-    return "";
+    root = ET.fromstring(request.data)
+    ns = {'SetupSession': 'urn:com:comcast:ngsrm:2010:08:01'}
+    tp = root.find('SetupSession:UnicastTransport', ns)
+    ip = tp.get('destinationAddress')
+    port = tp.get('destinationPort')
+    udpCast(ip, port, 0)
+    return '<SetupSessionResult xmlns="urn:com:comcast:ngsrm:2010:08:01"></SetupSessionResult>';
 
 @app.route('/ss/TeardownSession', methods=['POST'])
 def teardownSession():
