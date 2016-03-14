@@ -61,7 +61,7 @@ def setupSession():
     tp = root.find('SetupSession:UnicastTransport', ns)
     ip = tp.get('destinationAddress')
     port = tp.get('destinationPort')
-    # udpCast(ip, port, 0)
+    udpCast(ip, port, 0)
     result = ET.Element('SetupSessionResult')
     resp = ET.SubElement(result, 'Response')
     detail = ET.SubElement(result, 'StreamingResourceDetails')
