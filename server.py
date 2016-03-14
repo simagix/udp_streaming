@@ -4,8 +4,9 @@ import json
 import os
 import subprocess
 import sys
-from flask import Flask, send_from_directory, request
+from flask import Flask, send_from_directory, request, Response
 import xml.etree.ElementTree as ET
+from xml.etree.ElementTree import Element, SubElement, tostring, ElementTree
 
 app = Flask(__name__)
 root = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
@@ -60,8 +61,13 @@ def setupSession():
     tp = root.find('SetupSession:UnicastTransport', ns)
     ip = tp.get('destinationAddress')
     port = tp.get('destinationPort')
-    udpCast(ip, port, 0)
-    return '<SetupSessionResult xmlns="urn:com:comcast:ngsrm:2010:08:01"></SetupSessionResult>';
+    # udpCast(ip, port, 0)
+    result = ET.Element('SetupSessionResult')
+    resp = ET.SubElement(result, 'Response')
+    detail = ET.SubElement(result, 'StreamingResourceDetails')
+    transport = ET.SubElement(detail, 'UnicastTransport')
+    control = ET.SubElement(detail, 'StreamControlURL')
+    return Response(tostring(result)), 200, {'Content-Type': 'application/xml'}
 
 @app.route('/ss/TeardownSession', methods=['POST'])
 def teardownSession():
