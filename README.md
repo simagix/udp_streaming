@@ -19,3 +19,13 @@ curl -X POST http://localhost:5000/streaming/udp/<client_ip>/1234/0
 ```
 Or from a browser, http://localhost:5000, select a video and play.
 ```
+
+### Docker Build
+```
+docker build -t udp-streaming .
+```
+
+### Run As Docker Service
+```
+docker run -p 5050:5050 -v $(pwd)/library.repo:/etc/library.repo udp-streaming
+```
